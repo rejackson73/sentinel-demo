@@ -14,21 +14,30 @@ provider "aws" {
 }
 
 
-data "aws_ami" "ubuntu" {
+# data "aws_ami" "ubuntu" {
+#   most_recent = true
+
+#   filter {
+#     name   = "name"
+#     values = ["ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*"]
+#   }
+
+#   filter {
+#     name   = "virtualization-type"
+#     values = ["hvm"]
+#   }
+
+#   owners = ["099720109477"] # Canonical
+# }
+data aws_ami "rj-demo" {
   most_recent = true
 
   filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*"]
+    name = "name"
+    #values = ["ubuntu/images/hvm-ssd/ubuntu-disco-19.04-amd64-server-*"]
+    #values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+    values = ["robj-demo*"]
   }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
-}
 
 resource aws_vpc "rj-demo" {
   cidr_block           = var.vpc_cidr
@@ -102,7 +111,7 @@ resource aws_route_table_association "rj-demo" {
 }
 
 resource "aws_instance" "compute" {
-  ami           = data.aws_ami.ubuntu.id
+  ami           = data.aws_ami.rj-demo.id
   instance_type               = var.instance_type
   key_name                    = var.ssh_key
   associate_public_ip_address = true
@@ -111,5 +120,17 @@ resource "aws_instance" "compute" {
   tags = {
     Owner = "rjackson"
     TTL = 1
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "# Server specific consul configuration grabbing local IP",
+      "sudo tee /etc/vault-ssh-helper.d/config.hcl <<EOF",
+      "vault_addr = "var.vault_address:8200",
+      "ssh_mount_point = \"ssh\"",
+      "ca_cert = \"-dev\"",
+      "tls_skip_verify = false",
+      "allowed_roles = \"*\"",
+      "EOF", 
+    ]
   }
 }
