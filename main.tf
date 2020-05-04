@@ -39,6 +39,16 @@ data aws_ami "rj-demo" {
     #values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
     values = ["robj-demo*"]
   }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  filter {
+    name = "root-device-type"
+    values = ["ebs"]
+  }
+
+  owners = ["self"] # Canonical
 }
 
 resource aws_vpc "rj-demo" {
