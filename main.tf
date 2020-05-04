@@ -82,7 +82,7 @@ resource aws_security_group "rj-demo" {
 resource "aws_instance" "compute" {
   ami           = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
-  key_name                    = var.aws_key
+  key_name                    = var.ssh_key
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.rj-demo.id
   vpc_security_group_ids      = [aws_security_group.rj-demo.id]
