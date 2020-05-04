@@ -29,6 +29,7 @@ provider "aws" {
 
 #   owners = ["099720109477"] # Canonical
 # }
+
 data aws_ami "rj-demo" {
   most_recent = true
 
@@ -38,6 +39,7 @@ data aws_ami "rj-demo" {
     #values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
     values = ["robj-demo*"]
   }
+}
 
 resource aws_vpc "rj-demo" {
   cidr_block           = var.vpc_cidr
@@ -111,13 +113,13 @@ resource aws_route_table_association "rj-demo" {
 }
 
 resource "aws_instance" "compute" {
-  ami           = data.aws_ami.rj-demo.id
+  ami                         = data.aws_ami.rj-demo.id
   instance_type               = var.instance_type
   key_name                    = var.ssh_key
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.rj-demo.id
   vpc_security_group_ids      = [aws_security_group.rj-demo.id]
-  user_data                   = templatefile("ssh-helper-template.tpl",{})
+  user_data                   = templatefile("ssh-helper-template.tpl",{vault_address = var.vault_address})
   tags = {
     Owner = "rjackson"
     TTL = 1
