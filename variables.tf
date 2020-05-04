@@ -18,11 +18,6 @@ variable "instance_type" {
   default     = "t3.micro"
 }
 
-variable "aws_key" {
-  type        = string
-  description = "aws security PEM key"
-}
-
 variable "ssh_key" {
   type        = string
   description = "private key"
