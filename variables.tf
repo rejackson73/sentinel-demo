@@ -2,6 +2,10 @@ variable "region" {
   default = "us-east-1"
 }
 
+variable "prefix" {
+  default = "robj"
+}
+
 variable "vpc_cidr" {
   type        = string
   description = "CIDR of the VPC"
