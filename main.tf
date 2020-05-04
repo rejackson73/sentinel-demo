@@ -40,7 +40,7 @@ resource aws_vpc "rj-demo" {
 }
 
 resource aws_subnet "rj-demo" {
-  vpc_id     = aws_vpc.nomad-demo.id
+  vpc_id     = aws_vpc.rj-demo.id
   cidr_block = var.vpc_cidr
   tags = {
     name = "${var.prefix}-subnet"
