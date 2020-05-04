@@ -22,3 +22,8 @@ variable "ssh_key" {
   type        = string
   description = "private key"
 }
+
+variable "vault_address" {
+  type        = string
+  description = "public address for Vault"
+}
