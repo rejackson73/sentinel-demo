@@ -117,20 +117,9 @@ resource "aws_instance" "compute" {
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.rj-demo.id
   vpc_security_group_ids      = [aws_security_group.rj-demo.id]
+  user_data                   = templatefile("ssh-helper-template.tpl",{})
   tags = {
     Owner = "rjackson"
     TTL = 1
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "# Server specific consul configuration grabbing local IP",
-      "sudo tee /etc/vault-ssh-helper.d/config.hcl <<EOF",
-      "vault_addr = var.vault_address\":8200\"",
-      "ssh_mount_point = \"ssh\"",
-      "ca_cert = \"-dev\"",
-      "tls_skip_verify = false",
-      "allowed_roles = \"*\"",
-      "EOF", 
-    ]
   }
 }
