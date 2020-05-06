@@ -132,6 +132,5 @@ resource "aws_instance" "compute" {
   user_data                   = templatefile("ssh-helper-template.tpl",{vault_address = var.vault_address})
   tags = {
     Owner = "rjackson"
-    TTL = 1
   }
 }
