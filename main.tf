@@ -1,12 +1,3 @@
-terraform {
-  backend "remote" {
-    organization = "rjackson-demo"
-    workspaces {
-      name = "sentinel-demo"
-    }
-  }
-}
-
 provider "aws" {
   region                  = var.region
   profile                 = "default"
