@@ -49,6 +49,9 @@ resource aws_vpc "rj-demo" {
   tags = {
     name = "${var.prefix}-vpc"
   }
+  lifecycle {
+    prevent_destroy = "true"
+  }
 }
 
 resource aws_subnet "rj-demo" {
