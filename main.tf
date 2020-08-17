@@ -123,7 +123,7 @@ resource "aws_instance" "compute" {
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.rj-demo.id
   vpc_security_group_ids      = [aws_security_group.rj-demo.id]
-  user_data                   = templatefile("ssh-helper-template.tpl",{vault_address = var.vault_address})
+  #user_data                   = templatefile("ssh-helper-template.tpl",{vault_address = var.vault_address})
   tags = {
     Owner = "rjackson"
   }
