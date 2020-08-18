@@ -18,12 +18,12 @@ variable "instance_type" {
   default     = "t3.micro"
 }
 
-variable "ssh_key" {
-  type        = string
-  description = "private key"
-}
+#variable "ssh_key" {
+#  type        = string
+#  description = "private key"
+#}
 
-variable "vault_address" {
-  type        = string
-  description = "public address for Vault"
-}
+#variable "vault_address" {
+#  type        = string
+#  description = "public address for Vault"
+#}
