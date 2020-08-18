@@ -119,7 +119,7 @@ resource aws_route_table_association "rj-demo" {
 resource "aws_instance" "compute" {
   ami                         = data.aws_ami.rj-demo.id
   instance_type               = var.instance_type
-  key_name                    = var.ssh_key
+  #key_name                    = var.ssh_key
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.rj-demo.id
   vpc_security_group_ids      = [aws_security_group.rj-demo.id]
